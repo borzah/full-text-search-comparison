@@ -1,0 +1,22 @@
+server:
+  servlet:
+    contextPath: /api
+  port: 8500
+
+spring:
+  jpa:
+    database: postgresql
+    properties:
+      hibernate:
+        jdbc.batch_size: 30
+        jdbc.time_zone: Europe/Tallinn
+  datasource:
+    url: jdbc:postgresql://localhost:5411/postgres?currentSchema=public
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+#logging:
+#  level:
+#    net.ttddyy.dsproxy.listener: DEBUG
+

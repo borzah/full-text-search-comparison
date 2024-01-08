@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  search-comparison-jsonb-database:
+    image: postgres:16
+    container_name: search-comparison-jsonb-database
+    ports:
+      - "127.0.0.1:5422:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    networks:
+      - search-comparison-jsonb-postgres-net
+
+  search-comparison-jsonb-liquibase:
+    depends_on:
+      - search-comparison-jsonb-database
+    container_name: search-comparison-jsonb-liquibase
+    image: liquibase/liquibase
+    command: --defaultsFile=liquibase.properties update
+    volumes:
+      - ../liquibase/changelog:/liquibase/changelog
+      - ../liquibase/sql:/liquibase/sql
+      - ../liquibase/liquibase.properties:/liquibase/liquibase.properties
+      - ../liquibase/liquibase-changelog.xml:/liquibase/liquibase-changelog.xml
+    networks:
+      - search-comparison-jsonb-postgres-net
+
+networks:
+  search-comparison-jsonb-postgres-net:

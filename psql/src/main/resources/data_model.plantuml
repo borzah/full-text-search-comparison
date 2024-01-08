@@ -1,0 +1,171 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class category {
+   code_list_id: uuid
+   label: text
+   description: text
+   code_value: text
+   category_id: uuid
+}
+class code_list {
+   label: text
+   description: text
+   code_list_id: uuid
+}
+class concept {
+   variable_id: uuid
+   label: text
+   concept_id: uuid
+}
+class data_file {
+   study_id: uuid
+   title: text
+   begin_date: date
+   end_date: date
+   data_file_id: uuid
+}
+class databasechangelog {
+   id: varchar(255)
+   author: varchar(255)
+   filename: varchar(255)
+   dateexecuted: timestamp
+   orderexecuted: integer
+   exectype: varchar(10)
+   md5sum: varchar(35)
+   description: varchar(255)
+   comments: varchar(255)
+   tag: varchar(255)
+   liquibase: varchar(20)
+   contexts: varchar(255)
+   labels: varchar(255)
+   deployment_id: varchar(10)
+}
+class databasechangeloglock {
+   locked: boolean
+   lockgranted: timestamp
+   lockedby: varchar(255)
+   id: integer
+}
+class keyword {
+   data_file_id: uuid
+   name: text
+   keyword_id: uuid
+}
+class logical_record {
+   data_file_id: uuid
+   name: text
+   label: text
+   description: text
+   database_url: text
+   number_of_entries: bigint
+   logical_record_id: uuid
+}
+class metadata_domain {
+   label: text
+   metadata_domain_id: uuid
+}
+class other_material {
+   study_id: uuid
+   title: text
+   other_material_id: uuid
+}
+class quality_indicator {
+   variable_id: uuid
+   name: text
+   label: text
+   quality_indicator_id: uuid
+}
+class series {
+   subdomain_id: uuid
+   title: text
+   series_id: uuid
+}
+class study {
+   metadata_domain_id: uuid
+   subdomain_id: uuid
+   series_id: uuid
+   series_title: text
+   universe_id: uuid
+   universe_label: text
+   is_admin_data: boolean
+   title: text
+   summary: text
+   purpose: text
+   study_code: text
+   contact_name: text
+   contact_email_address: text
+   sector_coverage: text
+   reference_area: text
+   time_coverage: text
+   other_dissemination: text
+   documentation_on_methodology: text
+   geographical_comparability: text
+   comparability_over_time: text
+   source_data: text
+   frequency_of_data_collection: text
+   data_collection: text
+   data_validation: text
+   data_compilation: text
+   study_id: uuid
+}
+class study_search_index {
+   study_id: uuid
+   series_title: text
+   universe_label: text
+   title: text
+   purpose: text
+   reference_area: text
+   time_coverage: text
+   document: tsvector
+}
+class subdomain {
+   metadata_domain_id: uuid
+   label: text
+   subdomain_id: uuid
+}
+class subject {
+   data_file_id: uuid
+   name: text
+   subject_id: uuid
+}
+class variable {
+   logical_record_id: uuid
+   code_list_id: uuid
+   unit_type_id: text
+   unit_type_label: text
+   name: text
+   label: text
+   description: text
+   representation_type: text
+   type: text
+   variable_is_a_weight: boolean
+   blank_values_represent_missing_values: boolean
+   missing_values: text
+   measurement_unit: text
+   variable_role: text
+   represented_variable_label: text
+   conceptual_variable_label: text
+   percentage_of_filled_entries: integer
+   variable_id: uuid
+}
+
+category               -[#595959,plain]-^  code_list             : "code_list_id"
+concept                -[#595959,plain]-^  variable              : "variable_id"
+data_file              -[#595959,plain]-^  study                 : "study_id"
+keyword                -[#595959,plain]-^  data_file             : "data_file_id"
+logical_record         -[#595959,plain]-^  data_file             : "data_file_id"
+other_material         -[#595959,plain]-^  study                 : "study_id"
+quality_indicator      -[#595959,plain]-^  variable              : "variable_id"
+series                 -[#595959,plain]-^  subdomain             : "subdomain_id"
+study                  -[#595959,plain]-^  metadata_domain       : "metadata_domain_id"
+study                  -[#595959,plain]-^  series                : "series_id"
+study                  -[#595959,plain]-^  subdomain             : "subdomain_id"
+subdomain              -[#595959,plain]-^  metadata_domain       : "metadata_domain_id"
+subject                -[#595959,plain]-^  data_file             : "data_file_id"
+variable               -[#595959,plain]-^  code_list             : "code_list_id"
+variable               -[#595959,plain]-^  logical_record        : "logical_record_id"
+@enduml

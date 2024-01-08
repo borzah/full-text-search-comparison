@@ -1,0 +1,11 @@
+{
+  "index": {
+    "number_of_shards": 9,
+    "max_inner_result_window" : 1000,
+    "mapping": {
+      "nested_objects": {
+        "limit": 500000
+      }
+    }
+  }
+}

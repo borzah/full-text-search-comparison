@@ -1,0 +1,12 @@
+server:
+  servlet:
+    contextPath: /api
+  port: 8200
+
+elastic:
+  server-url: http://localhost:9300
+  api-key: key
+
+#logging:
+#  level:
+#    org.apache.http: DEBUG
